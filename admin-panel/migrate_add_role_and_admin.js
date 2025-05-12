@@ -1,7 +1,7 @@
 // Скрипт для добавления поля role и создания тестового админа
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
-const db = new sqlite3.Database('users.db');
+const db = new sqlite3.Database('adminBrandShop.db');
 
 const adminEmail = 'admin@brandshop.local';
 const adminPassword = 'admin123';

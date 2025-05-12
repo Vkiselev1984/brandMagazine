@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB Admin - Tables</title>
+</head>
+<body>
+    <h1>DB Admin: Tables</h1>
+    <ul>
+        <% tables.forEach(t => { %>
+            <li><a href="/admin/table/<%= t.name %>"><%= t.name %></a></li>
+        <% }) %>
+    </ul>
+</body>
+</html>

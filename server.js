@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 // --- API для получения товаров ---
 app.get('/products', (req, res) => {
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     let sql = 'SELECT * FROM products WHERE 1=1';
     let countSql = 'SELECT COUNT(*) as count FROM products WHERE 1=1';
     const params = [];
@@ -100,7 +100,7 @@ const bcrypt = require('bcryptjs');
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
         db.close();
         if (err) {
@@ -132,7 +132,7 @@ app.post('/login', (req, res) => {
 app.get('/cart', (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.status(401).json({ error: 'Not authorized' });
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     db.all('SELECT * FROM user_cart WHERE user_id = ?', [userId], (err, rows) => {
         db.close();
         if (err) return res.status(500).json({ error: 'DB error' });
@@ -145,7 +145,7 @@ app.post('/cart', (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.status(401).json({ error: 'Not authorized' });
     const { product_id, title, description, image, price, quantity } = req.body;
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     db.run(
         `INSERT INTO user_cart (user_id, product_id, title, description, image, price, quantity)
          VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -164,7 +164,7 @@ app.post('/cart/decrease', (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.status(401).json({ error: 'Not authorized' });
     const { product_id } = req.body;
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     db.get('SELECT quantity FROM user_cart WHERE user_id = ? AND product_id = ?', [userId, product_id], (err, row) => {
         if (err) { db.close(); return res.status(500).json({ error: 'DB error' }); }
         if (!row) { db.close(); return res.status(404).json({ error: 'Not found' }); }
@@ -189,7 +189,7 @@ app.post('/cart/remove', (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.status(401).json({ error: 'Not authorized' });
     const { product_id } = req.body;
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     db.run('DELETE FROM user_cart WHERE user_id = ? AND product_id = ?', [userId, product_id], function (err) {
         db.close();
         if (err) return res.status(500).json({ error: 'DB error' });
@@ -201,7 +201,7 @@ app.post('/cart/remove', (req, res) => {
 app.post('/cart/clear', (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.status(401).json({ error: 'Not authorized' });
-    const db = new sqlite3.Database('users.db');
+    const db = new sqlite3.Database('adminBrandShop.db');
     db.run('DELETE FROM user_cart WHERE user_id = ?', [userId], function (err) {
         db.close();
         if (err) return res.status(500).json({ error: 'DB error' });

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB Admin - <%= table %></title>
+</head>
+<body>
+    <h1>Table: <%= table %></h1>
+    <a href="/admin">Back to tables</a>
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <% columns.forEach(col => { %>
+                    <th><%= col.name %></th>
+                <% }) %>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach(row => { %>
+                <tr>
+                    <% columns.forEach(col => { %>
+                        <td><%= row[col.name] %></td>
+                    <% }) %>
+                    <td>
+                        <form method="POST" action="/admin/table/<%= table %>/delete/<%= row.id %>" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Delete row?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
