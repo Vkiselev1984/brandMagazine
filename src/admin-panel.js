@@ -10,12 +10,12 @@ export function renderAdminPanel() {
         <button id="admin-add-product" class="admin-panel-btn">Добавить товар</button>
         <button id="admin-users" class="admin-panel-btn">Пользователи</button>
     `;
-    // Вставляем после header (или в начало body)
+    // Вставляем внутри header
     const header = document.querySelector('header');
-    if (header && header.parentNode) {
-        header.parentNode.insertBefore(adminBar, header.nextSibling);
+    if (header) {
+        header.appendChild(adminBar); // Добавляем adminBar в конец header
     } else {
-        document.body.insertBefore(adminBar, document.body.firstChild);
+        document.body.insertBefore(adminBar, document.body.firstChild); // Если header не найден, добавляем в начало body
     }
 
     // Обработчики кнопок

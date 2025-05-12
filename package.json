@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vladimir Kiselev",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -20,10 +20,18 @@
     "fs": "^0.0.1-security",
     "sqlite3": "^5.1.7"
   },
-  "description": "",
   "devDependencies": {
     "@ljharb/tsconfig": "^0.2.3",
     "typescript": "^5.7.2",
     "vite": "^6.3.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vkiselev1984/brandMagazine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vkiselev1984/brandMagazine/issues"
+  },
+  "homepage": "https://github.com/Vkiselev1984/brandMagazine#readme",
+  "description": ""
 }
