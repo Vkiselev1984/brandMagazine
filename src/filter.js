@@ -15,23 +15,23 @@ export function setupFilter() {
         productContainer.innerHTML = '<li>Нет товаров для отображения</li>';
         return;
       }
-      const userRole = localStorage.getItem('userRole');
       products.forEach(product => {
         const listItem = document.createElement('li');
         listItem.className = 'goods__item product';
-        let adminEditIcon = '';
-        if (userRole === 'admin') {
-          adminEditIcon = `<span class="admin-edit-icon" title="Редактировать товар" data-id="${product.id}" style="cursor:pointer;position:absolute;top:10px;right:10px;z-index:2;">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect width="20" height="20" fill="white" fill-opacity="0"/>
-              <path d="M4 13.5V16H6.5L14.87 7.63L12.37 5.13L4 13.5ZM17.71 6.04C18.1 5.65 18.1 5.02 17.71 4.63L15.37 2.29C14.98 1.9 14.35 1.9 13.96 2.29L12.13 4.12L15.88 7.87L17.71 6.04Z" fill="#222"/>
-            </svg>
-          </span>`;
-        }
+        listItem.dataset.id = product.id;
+        // let adminEditIcon = '';
+        // if (userRole === 'admin') {
+        //   adminEditIcon = `<span class="admin-edit-icon" title="Редактировать товар" data-id="${product.id}" style="cursor:pointer;position:absolute;top:10px;right:10px;z-index:2;">
+        //     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        //       <rect width="20" height="20" fill="white" fill-opacity="0"/>
+        //       <path d="M4 13.5V16H6.5L14.87 7.63L12.37 5.13L4 13.5ZM17.71 6.04C18.1 5.65 18.1 5.02 17.71 4.63L15.37 2.29C14.98 1.9 14.35 1.9 13.96 2.29L12.13 4.12L15.88 7.87L17.71 6.04Z" fill="#222"/>
+        //     </svg>
+        //   </span>`;
+        // }
         listItem.innerHTML = `
           <div class="product__image-wrapper" style="position:relative;">
             <img class="product__image" src="${product.image}" alt="${product.title}">
-            ${adminEditIcon}
+            <!-- adminEditIcon -->
             <button class="product__add" data-title="${product.title}" data-price="${product.price}" data-image="${product.image}">Добавить в корзину</button>
           </div>
           <div class="product__content">
@@ -41,18 +41,7 @@ export function setupFilter() {
           </div>
         `;
         productContainer.appendChild(listItem);
-      });
-      // Обработчик для иконки-карандаша
-      if (userRole === 'admin') {
-        productContainer.querySelectorAll('.admin-edit-icon').forEach(icon => {
-          icon.addEventListener('click', (e) => {
-            const id = icon.getAttribute('data-id');
-            window.location.href = `/edit-product.html?id=${id}`;
-            e.stopPropagation();
-          });
-        });
-      }
-    }
+      });}
 
     // --- Рендер пагинации ---
     function renderPagination(total, limit) {
