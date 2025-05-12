@@ -1,0 +1,23 @@
+@charset "UTF-8";
+summary {
+  display: block;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "˅";
+  padding-right: 0.5em;
+}
+
+details[open] > summary::before {
+  content: "˃";
+}
+
+.nav__link {
+  color: white;
+  font-family: sans-serif;
+  text-decoration: none;
+}/*# sourceMappingURL=burger_style.css.map */

@@ -1,0 +1,17 @@
+.admin-edit-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 2px;
+    transition: background 0.2s;
+}
+.admin-edit-icon:hover {
+    background: #f0f0f0;
+}
+.product__image-wrapper {
+    position: relative !important;
+}

@@ -1,0 +1,339 @@
+<svg width="11" height="5" viewBox="0 0 11 5" fill="none" style="margin-left: 10px;"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M5.00214 5.00214C4.83521 5.00247 4.67343 4.94433 4.54488 4.83782L0.258102 1.2655C0.112196 1.14422 0.0204417 0.969958 0.00302325 0.781035C-0.0143952 0.592112 0.0439493 0.404007 0.165221 0.258101C0.286493 0.112196 0.460759 0.0204417 0.649682 0.00302327C0.838605 -0.0143952 1.02671 0.043949 1.17262 0.165221L5.00214 3.36602L8.83167 0.279536C8.90475 0.220188 8.98884 0.175869 9.0791 0.149125C9.16937 0.122382 9.26403 0.113741 9.35764 0.1237C9.45126 0.133659 9.54198 0.162021 9.6246 0.207156C9.70722 0.252292 9.7801 0.313311 9.83906 0.386705C9.90449 0.460167 9.95405 0.546351 9.98462 0.639855C10.0152 0.733359 10.0261 0.83217 10.0167 0.930097C10.0073 1.02802 9.97784 1.12296 9.93005 1.20895C9.88227 1.29494 9.81723 1.37013 9.73904 1.42982L5.45225 4.88068C5.32002 4.97036 5.16154 5.01312 5.00214 5.00214Z"
+                                        fill="#6F6E6E" />
+                                </svg>
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Объявляем переменную для хранения продуктов
+    let products = [
+        {
+            "category": "Accessories",
+            "brand": "AtributikClub",
+            "trend": "Color",
+            "size": "M",
+            "price": "21.00",
+            "title": "AtributikClub",
+            "description": "Your fingers will shine in rings from the designers of the brand shop",
+            "image": "img/accessories_2.jpg"
+        },
+        {
+            "category": "Accessories",
+            "brand": "AtributikClub",
+            "trend": "Form",
+            "size": "XS",
+            "price": "24.00",
+            "title": "AtributikClub",
+            "description": "The trend of the current year in amazing ring shapes from the brand shop to surprise and inspire",
+            "image": "img/accessories_5.jpg"
+        },
+        {
+            "category": "Accessories",
+            "brand": "AtributikClub",
+            "trend": "Materials",
+            "size": "L",
+            "price": "23.00",
+            "title": "AtributikClub",
+            "description": "To make rings, brand shop masters use only modern technologies and materials from the best suppliers",
+            "image": "img/accessories_3.jpg"
+        },
+        {
+            "category": "Bags",
+            "brand": "BagIndustries",
+            "trend": "Color",
+            "size": "XS",
+            "price": "30.00",
+            "title": "BagIndustries",
+            "description": "The bright and saturated color not only attracts attention, but also adds expressiveness to any image, be it everyday or evening situation",
+            "image": "img/bag_color.jpeg"
+        },
+        {
+            "category": "Bags",
+            "brand": "BagIndustries",
+            "trend": "Form",
+            "size": "M",
+            "price": "25.00",
+            "title": "BagIndustries",
+            "description": "The unconventional silhouette creates a visual accent that is impossible to ignore, setting your fashion standards to a new level",
+            "image": "img/bag_form.jpg"
+        },
+        {
+            "category": "Bags",
+            "brand": "BagIndustries",
+            "trend": "Materials",
+            "size": "M",
+            "price": "26.00",
+            "title": "BagIndustries",
+            "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.",
+            "image": "img/bag_materials.jpg"
+        },
+        {
+            "category": "Hoodies & Sweatshirts",
+            "brand": "HoodiesMag",
+            "trend": "Color",
+            "size": "M",
+            "price": "26.00",
+            "title": "HoodiesMag",
+            "description": "The bright and saturated color not only attracts attention, but also adds expressiveness to any image, be it everyday or evening situation",
+            "image": "img/sweet_color.jpg"
+        },
+        {
+            "category": "Hoodies & Sweatshirts",
+            "brand": "HoodiesMag",
+            "trend": "Form",
+            "size": "L",
+            "price": "27.00",
+            "title": "HoodiesMag",
+            "description": "The unconventional silhouette creates a visual accent that is impossible to ignore, setting your fashion standards to a new level",
+            "image": "img/sweet_form.jpg"
+        },
+        {
+            "category": "Hoodies & Sweatshirts",
+            "brand": "HoodiesMag",
+            "trend": "Materials",
+            "size": "L",
+            "price": "27.00",
+            "title": "HoodiesMag",
+            "description": "Variety and quality of materials from leading suppliers with a worldwide reputation",
+            "image": "img/sweet_materials.jpg"
+        }
+    ];
+
+    const productContainer = document.querySelector('.goods__list'); // Container for displaying products
+    const selectionMessage = document.createElement('div'); // Element for displaying user selection
+    selectionMessage.className = 'selection_message';
+    productContainer.parentNode.insertBefore(selectionMessage, productContainer); // Insert a message before product container
+
+    let selectedCategory = null; // Variable for storing selected category
+    const selectedTrends = new Set(); // Using Set to store unique selected trends
+    const selectedSizes = new Set(); // Use Set to store unique selected sizes
+    const selectedPriceRange = new Set(); // Using Set to store unique selected price ranges
+    let selectedBrand = new Set();
+
+    const itemsPerPage = 9; // Number of products per page
+    let currentPage = 1;
+
+    // Product display function
+    const renderProducts = (filteredProducts) => {
+        productContainer.innerHTML = ''; // Сontainer сleaning
+        const totalProducts = filteredProducts.length;
+        const totalPages = Math.ceil(totalProducts / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const productsToDisplay = filteredProducts.slice(startIndex, endIndex);
+
+        if (productsToDisplay.length === 0) {
+            const noProductsMessage = document.createElement('div');
+            noProductsMessage.className = 'no_products_message';
+            noProductsMessage.textContent = 'Sorry, we can\'t offer products from the selected category at the moment.';
+            productContainer.appendChild(noProductsMessage);
+        } else {
+            productsToDisplay.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.className = 'goods__item product';
+                listItem.setAttribute('data-category', product.category);
+                listItem.setAttribute('data-trend', product.trend);
+                listItem.setAttribute('data-size', product.size);
+                listItem.setAttribute('data-price', product.price);
+
+                listItem.innerHTML = `
+                    <div class="product__image-wrapper">
+                        <img class="product__image" src="${product.image}" alt="">
+                        <button class="product__add">Add to Cart</button>
+                    </div>
+                    <div class="product__content">
+                        <h3 class="product__title">${product.title}</h3>
+                        <p class="product__description">${product.description}</p>
+                        <p class="product__price">${product.price}</p>
+                    </div>
+                `;
+                productContainer.appendChild(listItem);
+            });
+        }
+        renderPagination(totalPages);
+    };
+
+    // Function to display pagination
+    const renderPagination = (totalPages) => {
+        const paginationContainer = document.querySelector('.pagination');
+        if (!paginationContainer) {
+            console.warn('Pagination container not found.'); // Debugging message
+            return;
+        }
+        paginationContainer.innerHTML = ''; // Clearing pagination container
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.className = 'page-button';
+            if (i === currentPage) {
+                pageButton.classList.add('active'); // Add active class to current page
+            }
+            pageButton.addEventListener('click', () => {
+                currentPage = i; // Set current page
+                updateDisplayedProducts(); // Updating displayed products
+            });
+            paginationContainer.appendChild(pageButton);
+        }
+    };
+
+    // Product filtering function
+    const filterProducts = () => {
+        console.log(`Trends: '${Array.from(selectedTrends).join(', ')}'`); // Debugging message
+        return products.filter(product => {
+            const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+            const matchesBrand = selectedBrand ? product.brand === selectedBrand : true; // Проверка на соответствие бренду
+            const matchesTrend = selectedTrends.size > 0 ? selectedTrends.has(product.trend.trim()) : true; // Trim для product.trend
+            const matchesSize = selectedSizes.size > 0 ? selectedSizes.has(product.size) : true;
+            const price = parseFloat(product.price);
+            const matchesPrice = selectedPriceRange.size > 0 ? (
+                selectedPriceRange.has("up to $100") && price <= 100 ||
+                selectedPriceRange.has("up to $1000") && price <= 1000 ||
+                selectedPriceRange.has("more than $1000") && price > 1000
+            ) : true;
+
+            return matchesCategory && matchesBrand && matchesTrend && matchesSize && matchesPrice; // Добавляем проверку на бренд
+        });
+    };
+
+    // Обновление отображаемых продуктов на основе выбранной категории, трендов, размеров и цен
+    const updateDisplayedProducts = () => {
+        const filteredProducts = filterProducts();
+        renderProducts(filteredProducts);
+        updateSelectionMessage(filteredProducts.length); // Обновляем сообщение выбора пользователя
+    };
+
+    // Функция для обновления сообщения выбора пользователя
+    const updateSelectionMessage = (totalFiltered) => {
+        let message = `Найдено товаров: ${totalFiltered}. Выбрано: `;
+        if (selectedCategory) {
+            message += `${selectedCategory} / `;
+        }
+        if (selectedTrends.size > 0) {
+            message += `${Array.from(selectedTrends).join(', ')} / `;
+        }
+        if (selectedSizes.size > 0) {
+            message += `${Array.from(selectedSizes).join(', ')} / `;
+        }
+        if (selectedPriceRange.size > 0) {
+            message += `${Array.from(selectedPriceRange).join(', ')}`;
+        }
+        selectionMessage.textContent = message;
+    };
+
+    // Отображаем все продукты при загрузке страницы
+    renderProducts(products);
+    // Убираем обновление сообщения выбора пользователя при загрузке
+
+    // Обработка клика на элементы с классом summary__dropdown_link
+    const dropdownLinks = document.querySelectorAll('.summary__dropdown_link');
+
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Предотвращаем переход по ссылке
+            const selectedValue = this.textContent; // Получаем текст ссылки, который соответствует категории или бренду
+
+            // Проверяем, является ли выбранное значение категорией или брендом
+            if (this.closest('.summary__item').querySelector('.summary__item_link').textContent.trim() === 'Category') {
+                selectedCategory = selectedValue; // Устанавливаем выбранную категорию
+                console.log("Вы выбрали категорию:", selectedCategory); // Debugging message
+            } else {
+                selectedBrand = selectedValue; // Устанавливаем выбранный бренд
+                console.log("Вы выбрали бренд:", selectedBrand); // Debugging message
+            }
+
+            currentPage = 1; // Сбрасываем текущую страницу при изменении категории или бренда
+            updateDisplayedProducts(); // Обновляем отображаемые продукты
+        });
+    });
+
+    // Обработка клика на элементы с классом для выбора трендов
+    const trendItems = document.querySelectorAll('.filters__dropdown_trend .trend-item'); // Предполагаем, что это элементы для выбора трендов
+
+    trendItems.forEach(item => {
+        item.addEventListener('click', function () {
+            const trendValue = this.textContent.trim(); // Получаем текст элемента
+            if (selectedTrends.has(trendValue)) {
+                selectedTrends.delete(trendValue); // Удаляем тренд, если он уже выбран
+                console.log(`Тренд удален: '${trendValue}'`); // Debugging message
+            } else {
+                selectedTrends.add(trendValue); // Добавляем тренд, если он не выбран
+                console.log(`Тренд добавлен: '${trendValue}'`); // Debugging message
+            }
+            currentPage = 1; // Сбрасываем текущую страницу при изменении фильтров
+            updateDisplayedProducts(); // Обновляем отображаемые продукты
+            console.log("Тренды после изменения:", Array.from(selectedTrends)); // Логируем текущие тренды после изменения
+        });
+    });
+
+    // Обработка клика на чекбоксы размеров
+    const sizeCheckboxes = document.querySelectorAll('.filters__dropdown_size input[type="checkbox"]');
+    sizeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const sizeValue = this.value;
+            if (this.checked) {
+                selectedSizes.add(sizeValue); // Добавляем размер, если он выбран
+            } else {
+                selectedSizes.delete(sizeValue); // Удаляем размер, если он не выбран
+            }
+            currentPage = 1; // Сбрасываем текущую страницу при изменении фильтров
+            updateDisplayedProducts(); // Обновляем отображаемые продукты
+        });
+    });
+
+    // Обработка клика на чекбоксы цен
+    const priceCheckboxes = document.querySelectorAll('.filters__dropdown_price input[type="checkbox"]');
+    priceCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const priceValue = this.value;
+            if (this.checked) {
+                selectedPriceRange.add(priceValue); // Добавляем ценовой диапазон, если он выбран
+            } else {
+                selectedPriceRange.delete(priceValue); // Удаляем ценовой диапазон, если он не выбран
+            }
+            currentPage = 1; // Сбрасываем текущую страницу при изменении фильтров
+            updateDisplayedProducts(); // Обновляем отображаемые продукты
+        });
+    });
+
+    // Добавим обработку для фильтрации по тренду
+    const trendDropdownItems = document.querySelectorAll('.filters__dropdown_item');
+
+    trendDropdownItems.forEach(item => {
+        // Убедимся, что обработчик события добавляется только один раз
+        const handleClick = function () {
+            const trendValue = this.textContent.replace(/\s+/g, ' ').trim(); // Удаляем лишние пробелы и символы новой строки
+            console.log(`Тренд выбран: '${trendValue}'`); // Debugging message
+            if (selectedTrends.has(trendValue)) {
+                selectedTrends.delete(trendValue); // Удаляем тренд, если он уже выбран
+                console.log(`Тренд удален: '${trendValue}'`); // Debugging message
+            } else {
+                selectedTrends.add(trendValue); // Добавляем тренд, если он не выбран
+                console.log(`Тренд добавлен: '${trendValue}'`); // Debugging message
+            }
+            currentPage = 1; // Сбрасываем текущую страницу при изменении фильтров
+            updateDisplayedProducts(); // Обновляем отображаемые продукты
+        };
+
+        // Удаляем предыдущие обработчики, если они есть
+        item.removeEventListener('click', handleClick);
+        // Добавляем новый обработчик
+        item.addEventListener('click', handleClick);
+    });
+
+    // Обработка ввода в поле поиска
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase(); // Получаем значение поля поиска и преобразуем в нижний регистр
+        const filteredProducts = products.filter(product => {
+            return product.title.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm);
+        });
+        currentPage = 1; // Сбрасываем текущую страницу при поиске
+        renderProducts(filteredProducts); // Обновляем отображаемые продукты на основе результата поиска
+        updateSelectionMessage(filteredProducts.length); // Обновляем сообщение выбора пользователя
+    });
+});
