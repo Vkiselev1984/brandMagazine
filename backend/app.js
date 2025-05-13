@@ -12,6 +12,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.use(session({
     secret: 'brandshop_secret',
@@ -29,7 +30,7 @@ app.use(require('./routes/cartRoutes'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'admin-panel/views'));
 app.use('/admin-style.css', express.static(path.join(__dirname, 'admin-panel/views', 'admin-style.css')));
-app.use('/', require('../admin-panel/routes/adminRoutes'));
+app.use('/', require('./db/routes/adminRoutes'));
 
 app.listen(port, () => {
     console.log(`Backend running at http://localhost:${port}`);

@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/admin-style.css', express.static(path.join(__dirname, 'views', 'admin-style.css')));
 
 // Подключение маршрутов MVC
-const adminRoutes = require('../../admin-panel/routes/adminRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 app.use('/', adminRoutes);
 
 // Запуск сервера
