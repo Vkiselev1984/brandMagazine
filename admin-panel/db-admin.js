@@ -10,6 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 
 const DB_PATH = path.join(__dirname, 'adminBrandShop.db');
 
+// Раздача статики для стилей админки
+app.use('/admin-style.css', express.static(path.join(__dirname, 'views', 'admin-style.css')));
+
 // Главная страница админки: список таблиц
 app.get('/admin', (req, res) => {
     const db = new sqlite3.Database(DB_PATH);

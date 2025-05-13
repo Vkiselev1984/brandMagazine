@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title><%= row ? 'Редактировать' : 'Добавить' %> в <%= table %></title>
+    <link rel="stylesheet" href="/admin-style.css">
 </head>
 <body>
-    <h1><%= row ? 'Редактировать' : 'Добавить' %> в таблицу <%= table %></h1>
-    <form method="POST" action="<%= row ? `/admin/table/${table}/edit/${row.id}` : `/admin/table/${table}/add` %>">
+  <div class="header-admin">BrandShop — Администрирование</div>
+  <div class="admin-container">
+    <div class="admin-title"><%= row ? 'Редактировать' : 'Добавить' %> в таблицу <%= table %></div>
+    <form class="admin-form" method="POST" action="<%= row ? `/admin/table/${table}/edit/${row.id}` : `/admin/table/${table}/add` %>">
         <% columns.forEach(col => { if (col.name === 'id') return; %>
             <div>
                 <label><%= col.name %>:</label>
                 <input name="<%= col.name %>" value="<%= row ? row[col.name] : '' %>" <%= col.notnull && !col.dflt_value ? 'required' : '' %> />
             </div>
         <% }) %>
-        <button type="submit"><%= row ? 'Сохранить' : 'Добавить' %></button>
-        <a href="/admin/table/<%= table %>">Отмена</a>
+        <button class="admin-btn" type="submit"><%= row ? 'Сохранить' : 'Добавить' %></button>
+        <a class="admin-link" href="/admin/table/<%= table %>">Отмена</a>
     </form>
+  </div>
 </body>
 </html>
