@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>DB Admin - <%= table %></title>
+    <link rel="stylesheet" href="/admin-style.css">
 </head>
 <body>
-    <h1>Table: <%= table %></h1>
-    <a href="/admin">Back to tables</a>
-    <a href="/admin/table/<%= table %>/add" style="margin:10px 0;display:inline-block;">➕ Добавить запись</a>
-    <table border="1" cellpadding="5">
+  <div class="header-admin">BrandShop — Администрирование</div>
+  <div class="admin-container">
+    <div class="admin-title">Таблица: <%= table %></div>
+    <a class="admin-link" href="/admin">← К списку таблиц</a>
+    <a class="admin-btn" href="/admin/table/<%= table %>/add">➕ Добавить запись</a>
+    <div class="admin-table-wrapper">
+      <table class="admin-table">
         <thead>
             <tr>
                 <% columns.forEach(col => { %>
@@ -24,14 +28,16 @@
                         <td><%= row[col.name] %></td>
                     <% }) %>
                     <td>
-                        <a href="/admin/table/<%= table %>/edit/<%= row.id %>">✏️</a>
+                        <a class="admin-btn" href="/admin/table/<%= table %>/edit/<%= row.id %>">✏️</a>
                         <form method="POST" action="/admin/table/<%= table %>/delete/<%= row.id %>" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Delete row?')">🗑️</button>
+                            <button class="admin-btn" type="submit" onclick="return confirm('Удалить запись?')">🗑️</button>
                         </form>
                     </td>
                 </tr>
             <% }) %>
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
 </body>
 </html>

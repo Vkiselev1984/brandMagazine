@@ -1,0 +1,124 @@
+/* admin-style.css: фирменный стиль для административной зоны BrandShop */
+@import url('../css/style.css');
+
+body {
+  background: #f8f8f8;
+  font-family: 'Lato', Arial, sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.header-admin {
+  background: #222222;
+  color: #fff;
+  padding: 18px 32px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.admin-container {
+  max-width: 900px;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 32px 40px 40px 40px;
+}
+
+.admin-title {
+  color: #f16d7f;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+.admin-table th, .admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.admin-table th {
+  background: #f8f8f8;
+  color: #f16d7f;
+  font-weight: 700;
+  font-size: 16px;
+}
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-btn, .admin-table button, .admin-table a {
+  display: inline-block;
+  background: #f16d7f;
+  color: #fff !important;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 18px;
+  font-size: 15px;
+  font-family: 'Lato', Arial, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  transition: background 0.2s;
+}
+.admin-btn:hover, .admin-table button:hover, .admin-table a:hover {
+  background: #d94c63;
+}
+
+.admin-form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #6F6E6E;
+  font-size: 15px;
+}
+.admin-form input[type="text"],
+.admin-form input[type="email"],
+.admin-form input[type="number"],
+.admin-form input[type="password"],
+.admin-form input:not([type]),
+.admin-form select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  font-size: 15px;
+  margin-bottom: 16px;
+  background: #f8f8f8;
+  font-family: 'Lato', Arial, sans-serif;
+}
+.admin-form button {
+  margin-top: 8px;
+}
+
+.admin-link {
+  color: #f16d7f;
+  text-decoration: underline;
+  font-size: 15px;
+  margin-right: 16px;
+}
+
+@media (max-width: 700px) {
+  .admin-container {
+    padding: 16px 4vw 24px 4vw;
+  }
+  .admin-title {
+    font-size: 22px;
+  }
+  .admin-table th, .admin-table td {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+}

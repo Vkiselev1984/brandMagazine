@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>DB Admin - Tables</title>
+    <link rel="stylesheet" href="/admin-style.css">
 </head>
 <body>
-    <h1>DB Admin: Tables</h1>
-    <ul>
+  <div class="header-admin">BrandShop — Администрирование</div>
+  <div class="admin-container">
+    <div class="admin-title">Список таблиц</div>
+    <ul style="padding-left:0;list-style:none;">
+
         <% tables.forEach(t => { %>
             <li><a href="/admin/table/<%= t.name %>"><%= t.name %></a></li>
         <% }) %>
     </ul>
+  </div>
 </body>
 </html>
