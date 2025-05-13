@@ -136,6 +136,17 @@ app.post('/register', (req, res) => {
     });
 });
 
+// --- ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ (для определения роли) ---
+app.get('/me', (req, res) => {
+    if (!req.session.userId) return res.json({ role: null });
+    const db = new sqlite3.Database('admin-panel/adminBrandShop.db');
+    db.get('SELECT role FROM users WHERE id = ?', [req.session.userId], (err, user) => {
+        db.close();
+        if (err || !user) return res.json({ role: null });
+        res.json({ role: user.role });
+    });
+});
+
 // --- КОРЗИНА ДЛЯ АВТОРИЗОВАННЫХ ---
 
 // Получить корзину пользователя с деталями товара
