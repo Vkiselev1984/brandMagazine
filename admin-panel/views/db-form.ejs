@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= row ? 'Редактировать' : 'Добавить' %> в <%= table %></title>
+</head>
+<body>
+    <h1><%= row ? 'Редактировать' : 'Добавить' %> в таблицу <%= table %></h1>
+    <form method="POST" action="<%= row ? `/admin/table/${table}/edit/${row.id}` : `/admin/table/${table}/add` %>">
+        <% columns.forEach(col => { if (col.name === 'id') return; %>
+            <div>
+                <label><%= col.name %>:</label>
+                <input name="<%= col.name %>" value="<%= row ? row[col.name] : '' %>" <%= col.notnull && !col.dflt_value ? 'required' : '' %> />
+            </div>
+        <% }) %>
+        <button type="submit"><%= row ? 'Сохранить' : 'Добавить' %></button>
+        <a href="/admin/table/<%= table %>">Отмена</a>
+    </form>
+</body>
+</html>

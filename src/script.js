@@ -63,5 +63,14 @@ export function setupMainScript() {
                 container.classList.remove('active');
             }
         });
+        // Показывать админ-панель только админу
+        fetch('http://localhost:5500/me', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.role === 'admin') {
+            const adminMenu = document.querySelector('.admin-panel-menu');
+            if (adminMenu) adminMenu.style.display = '';
+        }
+    });
     });
 }

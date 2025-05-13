@@ -7,6 +7,7 @@
 <body>
     <h1>Table: <%= table %></h1>
     <a href="/admin">Back to tables</a>
+    <a href="/admin/table/<%= table %>/add" style="margin:10px 0;display:inline-block;">➕ Добавить запись</a>
     <table border="1" cellpadding="5">
         <thead>
             <tr>
@@ -23,8 +24,9 @@
                         <td><%= row[col.name] %></td>
                     <% }) %>
                     <td>
+                        <a href="/admin/table/<%= table %>/edit/<%= row.id %>">✏️</a>
                         <form method="POST" action="/admin/table/<%= table %>/delete/<%= row.id %>" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Delete row?')">Delete</button>
+                            <button type="submit" onclick="return confirm('Delete row?')">🗑️</button>
                         </form>
                     </td>
                 </tr>

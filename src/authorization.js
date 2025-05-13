@@ -53,7 +53,20 @@ export function setupAuthorization() {
                             authForm.style.display = 'none';
                             userInfo.style.display = 'block';
                             usernameDisplay.textContent = user.firstName;
-                            window.location.reload(); // Чтобы отобразить админ-панель
+                            // Синхронизация корзины
+const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+if (localCart.length > 0) {
+    fetch('/cart/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: localCart })
+    }).then(() => {
+        localStorage.removeItem('cart');
+        window.location.reload();
+    });
+} else {
+    window.location.reload();
+} // Чтобы отобразить админ-панель
                         } else if (response.status === 400) {
                             const result = await response.json();
                             if (result.errors) {
